@@ -22,6 +22,10 @@
     { key: "manila", bg: "#E4DCC3", dark: "#CBC1A3" },
     { key: "sand", bg: "#D9CFB8", dark: "#BFB294" },
     { key: "slate", bg: "#CCD6D3", dark: "#AAB8B3" },
+    { key: "caramel", bg: "#DCB88F", dark: "#C29A6C" },
+    { key: "rose", bg: "#DEC7C3", dark: "#C4A6A1" },
+    { key: "sage", bg: "#C9D3C2", dark: "#AEBAA5" },
+    { key: "powder", bg: "#C7D3DE", dark: "#A9BAC9" },
   ];
 
   const LS_ENVELOPES = "bolsos_envelopes";
@@ -200,12 +204,13 @@
 
       const card = document.createElement("div");
       card.className = "envelope-card";
+      card.style.background = paper.bg;
       card.innerHTML = `
         <div class="envelope-flap" style="background:${paper.dark}"></div>
         <div class="envelope-seal" style="--pct:${pctClamped};--seal-color:${status.color}">
           <span class="material-symbols-outlined">${env.icon}</span>
         </div>
-        <div class="envelope-body" style="background:${paper.bg}">
+        <div class="envelope-body">
           <div class="envelope-nome">${escapeHtml(env.nome)}</div>
           <div class="envelope-valores"><strong>${formatMoedaCompacta(spent)}</strong> de ${formatMoedaCompacta(env.limite)}</div>
           <span class="envelope-status-tag tag-${status.key}">${status.label}</span>

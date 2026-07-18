@@ -200,6 +200,9 @@ button, input, select {
   cursor: pointer;
   color: var(--ink);
   min-width: 0;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.22);
 }
 
 .envelope-flap {
@@ -207,21 +210,18 @@ button, input, select {
   top: 0; left: 0; right: 0;
   height: 34px;
   clip-path: polygon(0 0, 100% 0, 50% 100%);
-  z-index: 0;
+  z-index: 1;
 }
 
 .envelope-body {
   position: relative;
-  z-index: 1;
-  border-radius: 0 0 14px 14px;
+  z-index: 0;
   padding: 30px 14px 16px;
   min-height: 118px;
   min-width: 0;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  box-shadow: 0 6px 14px rgba(0,0,0,0.22);
-  overflow: hidden;
 }
 
 .envelope-seal {
@@ -236,7 +236,8 @@ button, input, select {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: conic-gradient(var(--seal-color, var(--teal)) calc(var(--pct, 0) * 1%), rgba(27,36,48,0.14) 0);
+  background: conic-gradient(var(--seal-color, var(--teal)) calc(var(--pct, 0) * 1%), rgba(27,36,48,0.16) 0);
+  box-shadow: 0 0 0 3px rgba(241,233,216,0.9), 0 2px 6px rgba(0,0,0,0.25);
 }
 
 .envelope-seal::after {
@@ -698,10 +699,16 @@ input:focus, select:focus { outline: 2px solid var(--teal); outline-offset: 1px;
   color: var(--cream);
 }
 
-.icon-grid, .paper-grid {
+.icon-grid {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   gap: 8px;
+}
+
+.paper-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
 }
 
 .icon-opt {
@@ -719,11 +726,15 @@ input:focus, select:focus { outline: 2px solid var(--teal); outline-offset: 1px;
 
 .paper-opt {
   aspect-ratio: 1;
-  border-radius: 10px;
+  border-radius: 12px;
   border: 2px solid transparent;
+  box-shadow: inset 0 0 0 1px rgba(27,36,48,0.15);
 }
 
-.paper-opt.selected { border-color: var(--teal); }
+.paper-opt.selected {
+  border-color: var(--teal);
+  box-shadow: 0 0 0 2px var(--navy-panel), 0 0 0 3px var(--teal);
+}
 
 /* ===== Toast ===== */
 .toast {
