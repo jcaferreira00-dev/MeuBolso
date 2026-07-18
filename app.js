@@ -328,10 +328,13 @@
   }
 
   // ===================== Navegação de views =====================
+  const VIEWS_COM_FAB = ["inicio", "extrato"];
+
   function goToView(view) {
     document.querySelectorAll(".view").forEach((v) => v.classList.remove("active"));
     document.getElementById("view-" + view).classList.add("active");
     document.querySelectorAll(".nav-btn").forEach((b) => b.classList.toggle("active", b.dataset.view === view));
+    document.getElementById("fab-wrap").hidden = !VIEWS_COM_FAB.includes(view);
   }
 
   document.querySelectorAll(".nav-btn").forEach((btn) => {
