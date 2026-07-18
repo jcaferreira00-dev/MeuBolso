@@ -279,8 +279,6 @@ button, input, select {
 }
 
 .envelope-status-tag {
-  position: absolute;
-.envelope-status-tag {
   display: inline-block;
   align-self: flex-start;
   margin-top: 6px;
