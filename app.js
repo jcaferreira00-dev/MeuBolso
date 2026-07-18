@@ -27,6 +27,7 @@
   const LS_ENVELOPES = "bolsos_envelopes";
   const LS_TRANSACOES = "bolsos_transacoes";
   const LS_CONFIG = "bolsos_config";
+  const VALOR_MAXIMO = 9999999.99;
 
   // ===================== Estado =====================
   let envelopes = loadJSON(LS_ENVELOPES, []);
@@ -388,6 +389,10 @@
       showToast("Informe um valor válido");
       return;
     }
+    if (valor > VALOR_MAXIMO) {
+      showToast("Valor muito alto — confira se não digitou um zero a mais");
+      return;
+    }
 
     transacoes.push({ id: generateId(), envelopeId: envelopeSelecionadoLancamento, valor, nota, data });
     saveAll();
@@ -469,6 +474,10 @@
 
     if (!nome) {
       showToast("Dê um nome ao envelope");
+      return;
+    }
+    if (limite > VALOR_MAXIMO) {
+      showToast("Limite muito alto — confira se não digitou um zero a mais");
       return;
     }
 

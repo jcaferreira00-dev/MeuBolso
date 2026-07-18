@@ -44,6 +44,7 @@ html, body {
   font-family: var(--font-body);
   -webkit-tap-highlight-color: transparent;
   overscroll-behavior-y: none;
+  overflow-x: hidden;
 }
 
 body {
@@ -122,6 +123,8 @@ button, input, select {
   display: flex;
   flex-direction: column;
   gap: 2px;
+  min-width: 0;
+  flex-shrink: 1;
 }
 
 .stat-label {
@@ -135,8 +138,13 @@ button, input, select {
   font-family: var(--font-mono);
   font-size: 16px;
   font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
 }
 
+.stat-livre { flex-shrink: 0; }
 .stat-livre .stat-value { color: var(--teal); }
 .stat-livre.negativo .stat-value { color: var(--brick); }
 
@@ -180,7 +188,7 @@ button, input, select {
 /* ===== Envelope card (signature element) ===== */
 .envelopes-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 14px;
 }
 
@@ -189,6 +197,7 @@ button, input, select {
   padding-top: 30px;
   cursor: pointer;
   color: var(--ink);
+  min-width: 0;
 }
 
 .envelope-flap {
@@ -203,10 +212,12 @@ button, input, select {
   border-radius: 0 0 14px 14px;
   padding: 30px 14px 16px;
   min-height: 118px;
+  min-width: 0;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   box-shadow: 0 6px 14px rgba(0,0,0,0.22);
+  overflow: hidden;
 }
 
 .envelope-seal {
@@ -243,6 +254,9 @@ button, input, select {
   font-weight: 600;
   font-size: 14px;
   margin-bottom: 6px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .envelope-valores {
@@ -740,5 +754,5 @@ input:focus, select:focus { outline: 2px solid var(--teal); outline-offset: 1px;
 }
 
 @media (max-width: 340px) {
-  .envelopes-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .envelopes-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 10px; }
 }
