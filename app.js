@@ -201,6 +201,16 @@
       const status = statusDoEnvelope(spent, env.limite);
       const paper = paperOf(env.paper);
       const pctClamped = Math.min(100, status.pct || 0);
+      const restante = env.limite - spent;
+
+      let restanteHtml;
+      if (env.limite <= 0) {
+        restanteHtml = `<span class="envelope-restante-label">sem limite definido</span>`;
+      } else if (restante >= 0) {
+        restanteHtml = `<span class="envelope-restante-label">restam</span> <strong>${formatMoedaCompacta(restante)}</strong>`;
+      } else {
+        restanteHtml = `<span class="envelope-restante-label estourado">estourou em</span> <strong class="envelope-restante-estourado">${formatMoedaCompacta(Math.abs(restante))}</strong>`;
+      }
 
       const card = document.createElement("div");
       card.className = "envelope-card";
@@ -211,9 +221,18 @@
           <span class="material-symbols-outlined">${env.icon}</span>
         </div>
         <div class="envelope-body">
-          <div class="envelope-nome">${escapeHtml(env.nome)}</div>
-          <div class="envelope-valores"><strong>${formatMoedaCompacta(spent)}</strong> de ${formatMoedaCompacta(env.limite)}</div>
-          <span class="envelope-status-tag tag-${status.key}">${status.label}</span>
+          <div class="envelope-top-row">
+            <div class="envelope-nome">${escapeHtml(env.nome)}</div>
+            <span class="envelope-status-tag tag-${status.key}">${status.label}</span>
+          </div>
+          <div class="envelope-valores-row">
+            <span class="envelope-gasto">${formatMoedaCompacta(spent)}</span>
+            <span class="envelope-de">de ${formatMoedaCompacta(env.limite)}</span>
+          </div>
+          <div class="envelope-progress">
+            <div class="envelope-progress-fill" style="width:${pctClamped}%;background:${status.color}"></div>
+          </div>
+          <div class="envelope-restante">${restanteHtml}</div>
         </div>
       `;
       card.addEventListener("click", () => {

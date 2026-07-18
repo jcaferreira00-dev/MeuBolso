@@ -1,6 +1,6 @@
 {
-  "name": "Bolsos — controle por envelopes",
-  "short_name": "Bolsos",
+  "name": "Meu Bolso — controle por envelopes",
+  "short_name": "Meu Bolso",
   "description": "Divida seu dinheiro em envelopes digitais e nunca mais estoure o orçamento do mês.",
   "start_url": "./index.html",
   "scope": "./",

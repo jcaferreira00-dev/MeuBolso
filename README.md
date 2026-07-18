@@ -1,4 +1,4 @@
-# Bolsos — controle por envelopes
+# Meu Bolso — controle por envelopes
 
 App de controle financeiro por envelopes/orçamento por categoria. PWA em HTML/CSS/JS puro, sem build step, sem Firebase — todos os dados ficam em `localStorage` no aparelho do usuário.
 
