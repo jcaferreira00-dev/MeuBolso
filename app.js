@@ -82,6 +82,18 @@
     return v.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
   }
 
+  function formatMoedaCompacta(v) {
+    if (Math.abs(v) >= 100000) {
+      return v.toLocaleString("pt-BR", {
+        style: "currency",
+        currency: "BRL",
+        notation: "compact",
+        maximumFractionDigits: 1,
+      });
+    }
+    return formatMoeda(v);
+  }
+
   function parseValorInput(str) {
     if (!str) return 0;
     const clean = str.replace(/[^\d,.-]/g, "").replace(/\.(?=\d{3})/g, "").replace(",", ".");
@@ -145,10 +157,10 @@
     const gasto = envelopes.reduce((s, e) => s + gastoEnvelope(e.id, period), 0);
     const livre = orcado - gasto;
 
-    document.getElementById("stat-orcado").textContent = formatMoeda(orcado);
-    document.getElementById("stat-gasto").textContent = formatMoeda(gasto);
+    document.getElementById("stat-orcado").textContent = formatMoedaCompacta(orcado);
+    document.getElementById("stat-gasto").textContent = formatMoedaCompacta(gasto);
     const elLivre = document.getElementById("stat-livre");
-    elLivre.textContent = formatMoeda(livre);
+    elLivre.textContent = formatMoedaCompacta(livre);
     elLivre.parentElement.classList.toggle("negativo", livre < 0);
 
     const pct = orcado > 0 ? Math.min(100, (gasto / orcado) * 100) : 0;
@@ -195,7 +207,7 @@
         </div>
         <div class="envelope-body" style="background:${paper.bg}">
           <div class="envelope-nome">${escapeHtml(env.nome)}</div>
-          <div class="envelope-valores"><strong>${formatMoeda(spent)}</strong> de ${formatMoeda(env.limite)}</div>
+          <div class="envelope-valores"><strong>${formatMoedaCompacta(spent)}</strong> de ${formatMoedaCompacta(env.limite)}</div>
           <span class="envelope-status-tag tag-${status.key}">${status.label}</span>
         </div>
       `;
