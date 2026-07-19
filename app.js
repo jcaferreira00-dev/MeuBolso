@@ -182,6 +182,12 @@
     return { key: "ok", label: Math.round(pct) + "%", color: "var(--teal)", pct };
   }
 
+  function badgeIcon(env, status) {
+    if (env.limite <= 0) return "all_inclusive";
+    if (status.key === "estourado") return "warning";
+    return null;
+  }
+
   function renderInicio() {
     const period = periodForOffset(monthOffset);
     const grid = document.getElementById("envelopes-grid");
@@ -202,37 +208,46 @@
       const paper = paperOf(env.paper);
       const pctClamped = Math.min(100, status.pct || 0);
       const restante = env.limite - spent;
+      const icon = badgeIcon(env, status);
 
-      let restanteHtml;
+      let rodapeTexto;
       if (env.limite <= 0) {
-        restanteHtml = `<span class="envelope-restante-label">sem limite definido</span>`;
+        rodapeTexto = "Sem limite definido para este envelope";
       } else if (restante >= 0) {
-        restanteHtml = `<span class="envelope-restante-label">restam</span> <strong>${formatMoedaCompacta(restante)}</strong>`;
+        rodapeTexto = `Restam ${formatMoedaCompacta(restante)} disponíveis`;
       } else {
-        restanteHtml = `<span class="envelope-restante-label estourado">estourou em</span> <strong class="envelope-restante-estourado">${formatMoedaCompacta(Math.abs(restante))}</strong>`;
+        rodapeTexto = `Estourou em ${formatMoedaCompacta(Math.abs(restante))}`;
       }
+
+      const progressoHtml = env.limite > 0 ? `
+          <div class="envelope-progress-row">
+            <div class="envelope-progress-track">
+              <div class="envelope-progress-fill tag-fill-${status.key}" style="width:${pctClamped}%"></div>
+              <div class="envelope-progress-thumb" style="left:${pctClamped}%;border-color:${status.color}"></div>
+            </div>
+            <span class="envelope-progress-pct">${Math.round(pctClamped)}%</span>
+          </div>` : "";
 
       const card = document.createElement("div");
       card.className = "envelope-card";
-      card.style.background = paper.bg;
+      card.style.background = `linear-gradient(135deg, rgba(255,255,255,0.30), rgba(255,255,255,0) 45%), ${paper.bg}`;
       card.innerHTML = `
-        <div class="envelope-flap" style="background:${paper.dark}"></div>
-        <div class="envelope-seal" style="--pct:${pctClamped};--seal-color:${status.color}">
+        <div class="envelope-flap" style="background:linear-gradient(180deg, rgba(255,255,255,0.20), rgba(0,0,0,0.10)), ${paper.dark}"></div>
+        <div class="envelope-seal" style="background:${status.color}">
           <span class="material-symbols-outlined">${env.icon}</span>
         </div>
         <div class="envelope-body">
           <div class="envelope-top-row">
             <div class="envelope-nome">${escapeHtml(env.nome)}</div>
-            <span class="envelope-status-tag tag-${status.key}">${status.label}</span>
+            <span class="envelope-badge tag-${status.key}">${icon ? `<span class="material-symbols-outlined">${icon}</span>` : ""}${status.label}</span>
           </div>
-          <div class="envelope-valores-row">
-            <span class="envelope-gasto">${formatMoedaCompacta(spent)}</span>
-            <span class="envelope-de">de ${formatMoedaCompacta(env.limite)}</span>
+          <span class="envelope-gasto">${formatMoedaCompacta(spent)}</span>
+          <div class="envelope-de">de ${formatMoedaCompacta(env.limite)}</div>
+          ${progressoHtml}
+          <div class="envelope-footer">
+            <span class="envelope-footer-icon"><span class="material-symbols-outlined">${env.icon}</span></span>
+            <span class="envelope-footer-text">${rodapeTexto}</span>
           </div>
-          <div class="envelope-progress">
-            <div class="envelope-progress-fill" style="width:${pctClamped}%;background:${status.color}"></div>
-          </div>
-          <div class="envelope-restante">${restanteHtml}</div>
         </div>
       `;
       card.addEventListener("click", () => {
