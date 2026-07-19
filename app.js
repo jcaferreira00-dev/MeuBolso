@@ -233,7 +233,7 @@
       card.style.background = `linear-gradient(135deg, rgba(255,255,255,0.30), rgba(255,255,255,0) 45%), ${paper.bg}`;
       card.innerHTML = `
         <div class="envelope-flap" style="background:linear-gradient(180deg, rgba(255,255,255,0.20), rgba(0,0,0,0.10)), ${paper.dark}"></div>
-        <div class="envelope-seal" style="background:${status.color}">
+        <div class="envelope-seal" style="--pct:${pctClamped};--seal-color:${status.color}">
           <span class="material-symbols-outlined">${env.icon}</span>
         </div>
         <div class="envelope-body">

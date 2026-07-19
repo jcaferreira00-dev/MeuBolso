@@ -200,7 +200,7 @@ button, input, select {
   position: relative;
   width: 100%;
   max-width: 440px;
-  padding-top: 58px;
+  padding-top: 100px;
   cursor: pointer;
   color: var(--ink);
   min-width: 0;
@@ -215,7 +215,7 @@ button, input, select {
 .envelope-flap {
   position: absolute;
   top: 0; left: 0; right: 0;
-  height: 58px;
+  height: 100px;
   clip-path: polygon(0 0, 100% 0, 50% 100%);
   z-index: 1;
 }
@@ -223,7 +223,7 @@ button, input, select {
 .envelope-body {
   position: relative;
   z-index: 0;
-  padding: 38px 22px 20px;
+  padding: 40px 22px 20px;
   min-width: 0;
   display: flex;
   flex-direction: column;
@@ -233,7 +233,7 @@ button, input, select {
 .envelope-seal {
   position: absolute;
   z-index: 2;
-  top: 24px;
+  top: 69px;
   left: 50%;
   transform: translateX(-50%);
   width: 62px;
@@ -242,13 +242,21 @@ button, input, select {
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow:
-    0 0 0 3px var(--gold-ring),
-    0 0 0 6px rgba(232,217,166,0.55),
-    0 4px 10px rgba(0,0,0,0.32);
+  background: conic-gradient(var(--seal-color, var(--teal)) calc(var(--pct, 0) * 1%), rgba(27,36,48,0.16) 0);
+  box-shadow: 0 0 0 4px rgba(241,233,216,0.9), 0 3px 8px rgba(0,0,0,0.3);
+}
+
+.envelope-seal::after {
+  content: "";
+  position: absolute;
+  inset: 6px;
+  border-radius: 50%;
+  background: var(--navy);
 }
 
 .envelope-seal .material-symbols-outlined {
+  position: relative;
+  z-index: 1;
   color: var(--cream);
   font-size: 25px;
 }
@@ -735,21 +743,25 @@ select {
 
 input[type="text"], input[type="date"] {
   width: 100%;
+  height: 48px;
   background: var(--navy-panel-2);
   border: 1px solid var(--line);
   color: var(--cream);
-  padding: 12px 13px;
+  padding: 0 13px;
   border-radius: 12px;
   font-size: 15px;
+  box-sizing: border-box;
 }
 
 .input-valor-wrap {
   display: flex;
   align-items: center;
+  height: 48px;
   background: var(--navy-panel-2);
   border: 1px solid var(--line);
   border-radius: 12px;
   padding: 0 13px;
+  box-sizing: border-box;
 }
 
 .input-valor-wrap span { color: var(--muted); font-family: var(--font-mono); margin-right: 6px; }
@@ -757,9 +769,10 @@ input[type="text"], input[type="date"] {
 .input-valor-wrap input {
   border: none;
   background: none;
-  padding: 12px 0;
+  padding: 0;
+  height: 100%;
   font-family: var(--font-mono);
-  font-size: 17px;
+  font-size: 16px;
   font-weight: 700;
   flex: 1;
 }
